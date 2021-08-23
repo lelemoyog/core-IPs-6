@@ -82,8 +82,37 @@ public class App {
             }
         });
 
-        get("/users", "application/json", (req, res) -> {
-            return gson.toJson(userDao.getAll());
+        get("/news", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            System.out.println(newsDao.getAll());
+
+            if(newsDao.getAll().size()>0){
+                res.type("application/json");
+                return gson.toJson(newsDao.getAll());
+            }else {
+                return "{\"message\":\"I'm sorry, but no news are currently listed in the database.\"}";
+            }
+        });
+
+        get("/news/:departmentId", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            int departmentId = Integer.parseInt(req.params("departmentId"));
+
+            if(newsDao.getAllNewsByDepartment(departmentId).size()>0){
+                res.type("application/json");
+                return gson.toJson(newsDao.getAllNewsByDepartment(departmentId));
+            }else {
+                return "{\"message\":\"I'm sorry, but no news with that departmentId listed in the database.\"}";
+            }
+        });
+
+        get("/users", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            System.out.println(userDao.getAll());
+
+            if(userDao.getAll().size()>0){
+                res.type("application/json");
+                return gson.toJson(userDao.getAll());
+            }else {
+                return "{\"message\":\"I'm sorry, but no users are currently listed in the database.\"}";
+            }
         });
 
         get("/departments", "application/json", (req, res) -> { //accept a request in format JSON from an app
