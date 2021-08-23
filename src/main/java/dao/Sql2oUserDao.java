@@ -100,4 +100,12 @@ public class Sql2oUserDao implements UserDao{
         }
 
     }
+
+    public User findById(int userId) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM uses WHERE userId = :userId")
+                    .addParameter("userId", userId)
+                    .executeAndFetchFirst(User.class);
+        }
+    }
 }
