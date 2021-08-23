@@ -40,6 +40,14 @@ public class App {
             return gson.toJson(department);
         });
 
+        post("/users/new", "application/json", (req, res) -> {
+            User user = gson.fromJson(req.body(), User.class);
+            userDao.add(user);
+            res.status(201);
+            res.type("application/json");
+            return gson.toJson(user);
+        });
+
         post("/departments/:departmentId/news/new", "application/json", (req, res) -> {
             int departmentId = Integer.parseInt(req.params("departmentId"));
             News news = gson.fromJson(req.body(), News.class);
