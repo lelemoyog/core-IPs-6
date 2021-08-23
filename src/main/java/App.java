@@ -24,7 +24,7 @@ public class App {
         Gson gson = new Gson();
 
         staticFileLocation("/public");
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        String connectionString ="jdbc:postgresql://localhost:5432/organisational_portal";
         Sql2o sql2o = new Sql2o(connectionString, "issah", "issah9960");
         newsDao = new Sql2oNewsDao(sql2o);
         departmentDao = new Sql2oDepartmentDao(sql2o);

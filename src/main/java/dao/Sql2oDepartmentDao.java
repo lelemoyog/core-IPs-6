@@ -37,9 +37,10 @@ public class Sql2oDepartmentDao implements DepartmentDao {
         String sql = "INSERT INTO departments_users ( departmentId ,userId) VALUES ( :departmentId ,:userId)";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
-                    .addParameter("departmentId ", department.getDepartmentId ())
+                    .addParameter("departmentId ", department.getDepartmentId())
                     .addParameter("userId", user.getUserId())
                     .executeUpdate();
+            con.getKey();
         } catch (Sql2oException ex){
             System.out.println(ex);
         }

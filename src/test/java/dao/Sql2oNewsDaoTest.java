@@ -3,9 +3,7 @@ package dao;
 import models.Department;
 import models.News;
 import models.User;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -13,28 +11,39 @@ import static org.junit.Assert.*;
 
 public class Sql2oNewsDaoTest {
 
-    private Connection conn;
-    private Sql2oNewsDao newsDao;
-    private Sql2oDepartmentDao departmentDao;
+    private static Connection conn;
+    private static Sql2oNewsDao newsDao;
+    private static Sql2oDepartmentDao departmentDao;
+    private  static Sql2oUserDao userDao;
 
-    @Before
-    public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+    @BeforeClass
+    public static void setUp() throws Exception {
+        String connectionString = "jdbc:postgresql://localhost:5432/organisational_portal_test";
         Sql2o sql2o = new Sql2o(connectionString, "issah", "issah9960");
         newsDao = new Sql2oNewsDao(sql2o);
         departmentDao = new Sql2oDepartmentDao(sql2o);
+        userDao = new Sql2oUserDao(sql2o);
         conn = sql2o.open();
     }
 
     @After
     public void tearDown() throws Exception {
+        System.out.println("clearing database");
+        newsDao.clearAll();
+        departmentDao.clearAll();
+        userDao.clearAll();
+    }
+
+    @AfterClass
+    public static void shutDown() throws Exception{
         conn.close();
+        System.out.println("connection closed");
     }
 
     @Test
     public void addingNewsSetsId() throws Exception {
         News testNews = setUpNews();
-        assertEquals(1,testNews.getNewsId());
+        assertEquals(38,testNews.getNewsId());
     }
 
     @Test

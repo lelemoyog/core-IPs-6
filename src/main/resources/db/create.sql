@@ -1,27 +1,27 @@
-SET MODE PostgreSQL;
+--SET MODE PostgreSQL;
 
-CREATE TABLE IF NOT EXISTS users (
-userId int PRIMARY KEY auto_increment,
+CREATE TABLE  users (
+userId serial PRIMARY KEY,
 userName VARCHAR,
 companyPosition VARCHAR,
 departmentId INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS news (
-newsId int PRIMARY KEY auto_increment,
+CREATE TABLE news (
+newsId serial PRIMARY KEY,
 generalNews VARCHAR,
 departmentId INTEGER,
 userId INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS departments (
-departmentId int PRIMARY KEY auto_increment,
+CREATE TABLE departments (
+departmentId serial PRIMARY KEY,
 departmentName VARCHAR,
 description VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS departments_users(
-id int PRIMARY KEY auto_increment,
+CREATE TABLE departments_users(
+id serial PRIMARY KEY,
 userId INTEGER,
 departmentId INTEGER
 );
