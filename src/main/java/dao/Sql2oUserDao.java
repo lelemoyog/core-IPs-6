@@ -35,11 +35,11 @@ public class Sql2oUserDao implements UserDao{
 
     @Override
     public void addUserToDepartment(User user, Department department) {
-        String sql = "INSERT INTO departments_users (id ,userId, departmentId ) VALUES (:id ,:userId, :departmentId )";
+        String sql = "INSERT INTO departments_users (userId, departmentId ) VALUES (:userId, :departmentId )";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("userId", user.getUserId())
-                    .addParameter("departmentId ", user.getDepartmentId ())
+                    .addParameter("departmentId ", department.getDepartmentId ())
                     .executeUpdate();
                     con.getKey();
         } catch (Sql2oException ex){

@@ -16,6 +16,13 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class App {
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
     public static void main(String[] args) {
         Sql2oUserDao userDao;
         Sql2oDepartmentDao departmentDao;
@@ -23,9 +30,10 @@ public class App {
         Connection conn;
         Gson gson = new Gson();
 
+        port(getHerokuAssignedPort());
         staticFileLocation("/public");
-        String connectionString ="jdbc:postgresql://localhost:5432/organisational_portal";
-        Sql2o sql2o = new Sql2o(connectionString, "issah", "issah9960");
+        String connectionString ="jdbc:postgresql://ec2-35-153-91-18.compute-1.amazonaws.com:5432/d842dhkkvbdkfb";
+        Sql2o sql2o = new Sql2o(connectionString, "mkqdfzxqhcwucx", "2ef14d0da0e121c145b3b7e0f9fc755897b176be311f978473de14a63f23e708");
         newsDao = new Sql2oNewsDao(sql2o);
         departmentDao = new Sql2oDepartmentDao(sql2o);
         userDao = new Sql2oUserDao(sql2o);

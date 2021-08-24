@@ -8,7 +8,11 @@ this is an application programming interface that provides info about an organis
 * git init
 * git clone https://github.com/lelemoyog/core-IPs-6.git
 * and start using code
-##In PSQL:
+
+## How to use API
+*Url/departments -> gets alll depatments
+*url/news->
+*
 
 
 ## Technologies Used
